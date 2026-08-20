@@ -1,0 +1,23 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: maverick-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+  mongodb:
+      image: mongo:7.0
+      container_name: maverick-mongodb
+      ports:
+        - "27017:27017"
+      environment:
+        MONGO_INITDB_ROOT_DATABASE: maverick-redis
+      volumes:
+        - mongodb-data:/data/db
+
+volumes:
+  redis-data:
+  mongodb-data:
